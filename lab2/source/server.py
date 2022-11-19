@@ -4,6 +4,7 @@ import socketserver
 import os
 
 from urllib.parse import urlparse, parse_qs
+from datetime import datetime
 
 #print('source code for "http.server":', http.server.__file__)
 
@@ -23,7 +24,7 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             query_params = parse_qs(parse.query)
             
             if query_params.get('cmd', None) == ['time']:            
-            	self.wfile.write(b"time\n")
+            	self.wfile.write(str.encode(datetime.now().strftime('%H:%M:%S') + "\n"))
             elif query_params.get('cmd', None) == ['rev']:
             	self.wfile.write(b"rev\n")
             else:
