@@ -2,6 +2,7 @@
 import http.server
 import socketserver
 import os
+import json
 
 #print('source code for "http.server":', http.server.__file__)
 
@@ -14,9 +15,9 @@ class web_server(http.server.SimpleHTTPRequestHandler):
         if self.path == '/':
             self.protocol_version = 'HTTP/1.1'
             self.send_response(200)
-            self.send_header("Content-type", "text/html; charset=UTF-8")
+            self.send_header('Content-type', 'application/json; charset=UTF-8')
             self.end_headers()            
-            self.wfile.write(b"Hello World!\n")
+            self.wfile.write(str.encode(json.dumps({'lowerCase': 1, 'uppercase': 1, 'digits': 1, 'special': 1})))
         else:
             super().do_GET()
 
