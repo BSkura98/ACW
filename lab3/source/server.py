@@ -21,10 +21,26 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/json; charset=UTF-8')
             self.end_headers()            
-            self.wfile.write(str.encode(json.dumps({'lowerCase': 1, 'uppercase': 1, 'digits': 1, 'special': 1})))
             
             if params.get('str', None):
                 text = params.get('str', None)[0]
+          	lowercase = 0
+                uppercase = 0
+                digits = 0
+                special = 0
+
+		for char in text:
+		    if char.islower():
+		        uppercase += 1
+		    elif char.isupper():
+		        lowercase += 1
+		    elif char.isdigit():
+		        digits += 1
+		    else:
+		       	special += 1
+		       	
+		       	
+                self.wfile.write(str.encode(json.dumps({'lowercase': 1, 'uppercase': 1, 'digits': 1, 'special': 1})))
                 self.wfile.write(str.encode(f'{text}\n'))
             
         else:
