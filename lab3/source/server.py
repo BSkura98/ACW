@@ -23,25 +23,23 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             self.end_headers()            
             
             if params.get('str', None):
-                text = params.get('str', None)[0]
-          	lowercase = 0
-                uppercase = 0
-                digits = 0
-                special = 0
-
-		for char in text:
-		    if char.islower():
-		        uppercase += 1
-		    elif char.isupper():
-		        lowercase += 1
-		    elif char.isdigit():
-		        digits += 1
-		    else:
-		       	special += 1
-		       	
-		       	
-                self.wfile.write(str.encode(json.dumps({'lowercase': 1, 'uppercase': 1, 'digits': 1, 'special': 1})))
-                self.wfile.write(str.encode(f'{text}\n'))
+            	text = params.get('str', None)[0]
+            	lowercase = 0
+            	uppercase = 0
+            	digits = 0
+            	special = 0
+            	
+            	for char in text:
+            		if char.islower():
+            			lowercase += 1
+            		elif char.isupper():
+            			uppercase += 1
+            		elif char.isdigit():
+            			digits += 1
+            		else:
+            			special += 1
+            			
+            	self.wfile.write(str.encode(json.dumps({'lowercase': lowercase, 'uppercase': uppercase, 'digits': digits, 'special': special})))
             
         else:
             super().do_GET()
